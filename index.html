@@ -356,6 +356,7 @@
             <select id="clientSelect" onchange="fillClientData()">
                 <option value="new">new client</option>
                 <option value="subhash">Subhash Studios Private Limited</option>
+                <option value="zibanka">Zibanka Media Services Private Limited</option>
             </select>
 
             <label>name</label>
@@ -432,6 +433,12 @@
                 address: "201, Nimbus Centre, Plot Number 69\nOberoi Complex, Near Laxmi Industrial Estate\nAndheri West, Mumbai-53",
                 contact: "9930405505",
                 gst: "27AABCS1126R1Z3"
+            },
+            zibanka: {
+                name: "Zibanka Media Services Private Limited",
+                address: "Unit no. 21, 2nd floor, Techniplex Towers 1\nNext to Witty International school, Pawan Baug\nGoregaon West, Mumbai-64",
+                contact: "",
+                gst: ""
             }
         };
 
@@ -446,6 +453,12 @@
                 document.getElementById("clientContact").value = clientData.subhash.contact;
                 document.getElementById("clientAddress").value = clientData.subhash.address;
                 document.getElementById("clientGST").value = clientData.subhash.gst;
+            }
+            else if (sel === "zibanka") {
+                document.getElementById("clientName").value = clientData.zibanka.name;
+                document.getElementById("clientContact").value = clientData.zibanka.contact;
+                document.getElementById("clientAddress").value = clientData.zibanka.address;
+                document.getElementById("clientGST").value = clientData.zibanka.gst;
             } else {
                 document.getElementById("clientName").value = "";
                 document.getElementById("clientContact").value = "";
