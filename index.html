@@ -343,12 +343,33 @@
                 align-items: flex-start;
             }
         }
+
+        #topGenerateBtn {
+            max-width: none;
+            padding: 8px 16px;
+            font-size: 20px;
+            margin: 0;
+            width: auto;
+        }
+
+        #topGenerateBtn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
     </style>
+
 </head>
 
 <body>
 
     <h1>dubbing invoice</h1>
+    <h2 style="text-align:center;">
+        <button id="topGenerateBtn" onclick="generateInvoice()" disabled style="display:none;">
+            generate invoice
+        </button>
+    </h2>
+
     <div class="form-section">
         <h3>client details</h3>
         <div class="client-details">
@@ -372,8 +393,6 @@
         <h3>project details</h3>
         <div id="dubbingRows"></div>
         <button type="button" onclick="addRow()">add dub</button>
-
-        <button type="button" onclick="generateInvoice()">generate invoice</button>
     </div>
 
     <div id="invoice">
@@ -567,6 +586,15 @@
         window.onload = () => {
             document.getElementById("dubbingRows").appendChild(createRow(true));
         };
+
+        window.addEventListener("scroll", () => {
+            const btn = document.getElementById("topGenerateBtn");
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 2) {
+                btn.style.display = "inline-block";
+                btn.disabled = false;
+            }
+        });
+
     </script>
 
 </body>
