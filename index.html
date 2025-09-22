@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>dubbing invoice</title>
+    <title>Dubbing Invoice</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="https://developer.apple.com/fonts/sf-pro.css">
@@ -158,18 +157,6 @@
             transition: background 0.2s ease;
         }
 
-        .client-details:hover {
-            background: #333333;
-        }
-
-        .client-details:nth-child(even) {
-            background: #333333;
-        }
-
-        .client-details:nth-child(even):hover {
-            background: #333333;
-        }
-
         #invoice {
             display: none;
             background: #fff;
@@ -280,68 +267,12 @@
             color: #2d3748;
         }
 
-        .bank p {
-            margin: 6px 0;
-        }
-
         .signature {
             text-align: right;
             font-weight: 700;
             margin-top: 70px;
             font-size: 15px;
             color: #1a252f;
-        }
-
-        .bank,
-        .signature,
-        .section,
-        tr {
-            page-break-inside: avoid;
-        }
-
-        @media (max-width: 600px) {
-            body {
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            .form-section {
-                padding: 20px;
-            }
-
-            input,
-            select,
-            textarea {
-                font-size: 14px;
-                padding: 10px;
-            }
-
-            button {
-                font-size: 14px;
-                padding: 12px;
-            }
-
-            .dubbing-row {
-                padding: 15px;
-            }
-
-            .deleteBtn {
-                font-size: 12px;
-                padding: 8px;
-                max-width: 120px;
-            }
-
-            #invoice {
-                padding: 20px;
-            }
-
-            #invoice header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
         }
 
         #topGenerateBtn {
@@ -371,41 +302,39 @@
             opacity: 0.6;
         }
     </style>
-
 </head>
 
 <body>
-
-    <h1>dubbing invoice</h1>
+    <h1>Dubbing Invoice</h1>
     <h2 style="text-align:center;">
         <button id="topGenerateBtn" onclick="generateInvoice()" disabled style="display:none;">
-            generate invoice
+            Generate Invoice
         </button>
     </h2>
 
     <div class="form-section">
-        <h3>client details</h3>
+        <h3>Client Details</h3>
         <div class="client-details">
-            <label>choose client (optional)</label>
+            <label>Choose Client (optional)</label>
             <select id="clientSelect" onchange="fillClientData()">
-                <option value="new">new client</option>
+                <option value="new">New Client</option>
                 <option value="subhash">Subhash Studios Private Limited</option>
                 <option value="zibanka">Zibanka Media Services Private Limited</option>
             </select>
 
-            <label>name</label>
+            <label>Name</label>
             <input id="clientName">
-            <label>contact number</label>
+            <label>Contact Number</label>
             <input type="number" id="clientContact">
-            <label>address</label>
+            <label>Address</label>
             <textarea id="clientAddress"></textarea>
             <label>GSTIN</label>
             <input id="clientGST">
         </div>
 
-        <h3>project details</h3>
+        <h3>Project Details</h3>
         <div id="dubbingRows"></div>
-        <button type="button" onclick="addRow()">add dub</button>
+        <button type="button" onclick="addRow()">Add Dub</button>
     </div>
 
     <div id="invoice">
@@ -503,22 +432,22 @@
             const row = document.createElement("div");
             row.classList.add("dubbing-row");
             row.innerHTML = `
-                <label>date <span style="color:red">*</span></label>
+                <label>Date <span style="color:red">*</span></label>
                 <input type="date" class="dubDate" required>
-                <label>series/movie’s name</label>
+                <label>Series/Movie's Name</label>
                 <input class="seriesName">
-                <label>character(s) voiced</label>
+                <label>Character(s) Voiced</label>
                 <input class="characters">
-                <label>director</label>
+                <label>Director</label>
                 <input class="director">
-                <label>episode(s)</label>
+                <label>Episode(s)</label>
                 <input class="episodes">
-                <label>amount (₹)</label>
+                <label>Amount (₹)</label>
                 <input type="number" class="amount">
             `;
             if (!isFirst) {
                 const btn = document.createElement("button");
-                btn.textContent = "delete";
+                btn.textContent = "Delete";
                 btn.className = "deleteBtn";
                 btn.onclick = () => row.remove();
                 row.appendChild(btn);
@@ -598,18 +527,27 @@
 
         window.onload = () => {
             document.getElementById("dubbingRows").appendChild(createRow(true));
+            document.body.style.transform = "scale(1)";
+            document.body.style.transformOrigin = "top center";
         };
 
         window.addEventListener("scroll", () => {
             const btn = document.getElementById("topGenerateBtn");
+
             if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 2) {
                 btn.style.display = "inline-block";
                 btn.disabled = false;
             }
+
+            if (window.scrollY === 0) {
+                document.body.style.transition = "transform 0.3s ease";
+                document.body.style.transform = "scale(0.9)";
+                document.body.style.transformOrigin = "top center";
+            } else {
+                document.body.style.transition = "transform 0.3s ease";
+                document.body.style.transform = "scale(1)";
+            }
         });
-
     </script>
-
 </body>
-
 </html>
