@@ -43,7 +43,7 @@ function createRow(isFirst = false) {
     row.innerHTML = `
         <label>date <span style="color:red">*</span></label>
         <input type="date" class="dubDate" required>
-        <label>series/movie's name</label>
+        <label>series/movie’s name</label>
         <input class="seriesName">
         <label>character(s) voiced</label>
         <input class="characters">
