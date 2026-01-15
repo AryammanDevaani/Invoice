@@ -16,7 +16,6 @@
     <h2 style="text-align:center;">
         <button id="topGenerateBtn" onclick="generateInvoice()" disabled style="display:none;">generate invoice</button>
     </h2>
-    
     <div class="form-section">
         <h3>client details</h3>
         <div class="client-details">
@@ -26,31 +25,24 @@
                 <option value="subhash">Subhash Studios Private Limited</option>
                 <option value="zibanka">Zibanka Media Services Private Limited</option>
             </select>
-            
             <label>name</label>
             <input id="clientName">
-            
             <label>contact number</label>
             <input type="number" id="clientContact">
-            
             <label>address</label>
             <textarea id="clientAddress"></textarea>
-            
             <label>GSTIN</label>
             <input id="clientGST">
         </div>
-        
         <h3>project details</h3>
         <div id="dubbingRows"></div>
         <button type="button" onclick="addRow()">add dub</button>
     </div>
-    
     <div id="invoice">
         <header>
             <h2>Invoice</h2>
             <div class="date">Date: <span id="invoiceDate"></span></div>
         </header>
-        
         <div class="section">
             <h3>From</h3>
             <p><strong>Jullie Devaani</strong></p>
@@ -58,7 +50,6 @@
             <p>B-70, Vardhman Nagar<br>Nursing Lane, Malad West<br>Mumbai-64</p>
             <p>jullie.devaani@gmail.com</p>
         </div>
-        
         <div class="section">
             <h3>Bill To</h3>
             <p><strong id="outClientName"></strong></p>
@@ -66,7 +57,6 @@
             <p id="outClientAddress"></p>
             <p><span class="gst-label">GSTIN:</span> <span id="outClientGST"></span></p>
         </div>
-        
         <table>
             <thead>
                 <tr>
@@ -80,9 +70,7 @@
             </thead>
             <tbody id="invoiceTable"></tbody>
         </table>
-        
         <div class="total">Total: ₹<span id="outTotal"></span></div>
-        
         <div class="bank">
             <strong>Bank Details:</strong>
             <p>Bank of Baroda</p>
@@ -91,10 +79,8 @@
             <p><b>Branch:</b> Mount Poinsur</p>
             <p><b>UPI No:</b> 7506242650</p>
         </div>
-        
         <div class="signature">Jullie Devaani</div>
     </div>
-    
     <script src="scripts.js"></script>
 </body>
 
