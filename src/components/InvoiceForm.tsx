@@ -123,6 +123,29 @@ export const InvoiceForm = () => {
     }
   };
 
+  const handleShare = async () => {
+    if (instance.blob) {
+      if (navigator.share) {
+        try {
+          const file = new File([instance.blob], 'jullie-devaani-invoice.pdf', { type: 'application/pdf' });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: 'Invoice',
+            });
+          } else {
+            handleGenerate();
+          }
+        } catch (err) {
+          console.error('Error sharing:', err);
+          handleGenerate();
+        }
+      } else {
+        handleGenerate();
+      }
+    }
+  };
+
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
       
@@ -286,21 +309,38 @@ export const InvoiceForm = () => {
       {/* Action Button */}
       <div className="flex justify-center mt-8">
         {mounted && isFormValid ? (
-          <button
-            onClick={handleGenerate}
-            disabled={instance.loading}
-            className="flex items-center gap-2 bg-white text-black px-8 py-4 rounded-xl font-medium disabled:opacity-50"
-          >
-            {instance.loading ? 'preparing pdf...' : 'generate invoice'}
-          </button>
+          <>
+            <button
+              onClick={handleShare}
+              disabled={instance.loading}
+              className="sm:hidden flex items-center gap-2 bg-white text-black px-8 py-4 rounded-xl font-medium disabled:opacity-50"
+            >
+              {instance.loading ? 'preparing pdf...' : 'share invoice'}
+            </button>
+            <button
+              onClick={handleGenerate}
+              disabled={instance.loading}
+              className="hidden sm:flex items-center gap-2 bg-white text-black px-8 py-4 rounded-xl font-medium disabled:opacity-50"
+            >
+              {instance.loading ? 'preparing pdf...' : 'generate invoice'}
+            </button>
+          </>
         ) : (
-          <button 
-            disabled
-            className="flex items-center gap-2 bg-white/10 text-white/30 cursor-not-allowed px-8 py-4 rounded-xl font-medium"
-            title="please fill in company name and all required date fields"
-          >
-            generate invoice
-          </button>
+          <>
+            <button 
+              disabled
+              className="sm:hidden flex items-center gap-2 bg-white/10 text-white/30 cursor-not-allowed px-8 py-4 rounded-xl font-medium"
+            >
+              share invoice
+            </button>
+            <button 
+              disabled
+              className="hidden sm:flex items-center gap-2 bg-white/10 text-white/30 cursor-not-allowed px-8 py-4 rounded-xl font-medium"
+              title="please fill in company name and all required date fields"
+            >
+              generate invoice
+            </button>
+          </>
         )}
       </div>
     </div>
