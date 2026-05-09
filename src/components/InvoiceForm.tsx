@@ -130,8 +130,7 @@ export const InvoiceForm = () => {
           const file = new File([instance.blob], 'jullie-devaani-invoice.pdf', { type: 'application/pdf' });
           if (navigator.canShare && navigator.canShare({ files: [file] })) {
             await navigator.share({
-              files: [file],
-              title: 'Invoice',
+              files: [file]
             });
           } else {
             handleGenerate();

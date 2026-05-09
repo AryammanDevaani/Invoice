@@ -9,16 +9,16 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "Invoice",
-  description: "Aesthetic and minimalist invoice generator",
+  description: "Invoice generator",
   openGraph: {
     title: "Invoice",
-    description: "Aesthetic and minimalist invoice generator",
+    description: "Invoice generator",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "Invoice",
-    description: "Aesthetic and minimalist invoice generator",
+    description: "Invoice generator",
   },
   icons: {
     icon: "/favicon.png",
