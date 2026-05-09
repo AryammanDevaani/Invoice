@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import { ClientDetails, DubbingRow, InvoiceData } from '../types';
-import { pdf, usePDF } from '@react-pdf/renderer';
+import { usePDF } from '@react-pdf/renderer';
 import { InvoicePDF } from './InvoicePDF';
 import { format } from 'date-fns';
 

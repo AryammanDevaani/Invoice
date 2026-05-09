@@ -1,4 +1,9 @@
-import { InvoiceForm } from "@/components/InvoiceForm";
+import dynamic from 'next/dynamic';
+
+const InvoiceForm = dynamic(
+  () => import('@/components/InvoiceForm').then((mod) => mod.InvoiceForm),
+  { ssr: false }
+);
 
 export default function Home() {
   return (
