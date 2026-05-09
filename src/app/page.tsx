@@ -8,7 +8,7 @@ export default function Home() {
         {/* Header Area */}
         <div className="text-center py-0.5">
           <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-white drop-shadow-sm lowercase">
-            dubbing invoice
+            invoice
           </h1>
         </div>
 

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import { ClientDetails, DubbingRow, InvoiceData } from '../types';
-import { pdf } from '@react-pdf/renderer';
+import { pdf, usePDF } from '@react-pdf/renderer';
 import { InvoicePDF } from './InvoicePDF';
 import { format } from 'date-fns';
 
@@ -31,7 +31,6 @@ export const InvoiceForm = () => {
   ]);
 
   const [mounted, setMounted] = useState(false);
-  const [generating, setGenerating] = useState(false);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -103,29 +102,24 @@ export const InvoiceForm = () => {
     }))
   };
 
+  const [instance, updateInstance] = usePDF({ document: <InvoicePDF data={invoiceData} /> });
+
+  useEffect(() => {
+    updateInstance(<InvoicePDF data={invoiceData} />);
+  }, [client, rows, updateInstance]);
+
   const isFormValid = client.name.trim() !== '';
 
-  const handleGenerate = async () => {
-    setGenerating(true);
-    // Open window synchronously to avoid iOS Safari popup blocker
-    const newWindow = window.open('about:blank', '_blank');
-    try {
-      const blob = await pdf(<InvoicePDF data={invoiceData} />).toBlob();
-      const url = URL.createObjectURL(blob);
-      if (newWindow) {
-        newWindow.location.href = url;
-      } else {
-        // Fallback: trigger download if popup was blocked
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Jullie-Devaani-Invoice.pdf';
-        a.click();
-      }
-    } catch (err) {
-      console.error('PDF generation failed:', err);
-      if (newWindow) newWindow.close();
-    } finally {
-      setGenerating(false);
+  const handleGenerate = () => {
+    if (instance.url) {
+      const link = document.createElement('a');
+      link.href = instance.url;
+      link.target = '_blank';
+      link.rel = 'noreferrer';
+      // On iOS, sometimes we need to add the link to the DOM
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   };
 
@@ -294,10 +288,10 @@ export const InvoiceForm = () => {
         {mounted && isFormValid ? (
           <button
             onClick={handleGenerate}
-            disabled={generating}
+            disabled={instance.loading}
             className="flex items-center gap-2 bg-white text-black px-8 py-4 rounded-xl font-medium disabled:opacity-50"
           >
-            {generating ? 'preparing pdf...' : 'generate invoice'}
+            {instance.loading ? 'preparing pdf...' : 'generate invoice'}
           </button>
         ) : (
           <button 

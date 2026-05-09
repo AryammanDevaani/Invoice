@@ -8,8 +8,18 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Dubbing Invoice Generator",
-  description: "Aesthetic and minimalist invoice generator for dubbing artists",
+  title: "Invoice",
+  description: "Aesthetic and minimalist invoice generator",
+  openGraph: {
+    title: "Invoice",
+    description: "Aesthetic and minimalist invoice generator",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Invoice",
+    description: "Aesthetic and minimalist invoice generator",
+  },
   icons: {
     icon: "/favicon.png",
   },
