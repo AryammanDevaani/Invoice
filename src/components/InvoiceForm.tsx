@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Plus, Trash2, FileDown } from 'lucide-react';
+import { Plus, Trash2 } from 'lucide-react';
 import { ClientDetails, DubbingRow, InvoiceData } from '../types';
-import { PDFDownloadLink } from '@react-pdf/renderer';
+import { pdf } from '@react-pdf/renderer';
 import { InvoicePDF } from './InvoicePDF';
 import { format } from 'date-fns';
 
@@ -31,6 +31,7 @@ export const InvoiceForm = () => {
   ]);
 
   const [mounted, setMounted] = useState(false);
+  const [generating, setGenerating] = useState(false);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -103,6 +104,19 @@ export const InvoiceForm = () => {
   };
 
   const isFormValid = client.name.trim() !== '';
+
+  const handleGenerate = async () => {
+    setGenerating(true);
+    try {
+      const blob = await pdf(<InvoicePDF data={invoiceData} />).toBlob();
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+    } catch (err) {
+      console.error('PDF generation failed:', err);
+    } finally {
+      setGenerating(false);
+    }
+  };
 
   return (
     <div className="w-full max-w-4xl mx-auto space-y-8">
@@ -267,15 +281,13 @@ export const InvoiceForm = () => {
       {/* Action Button */}
       <div className="flex justify-center mt-8">
         {mounted && isFormValid ? (
-          <PDFDownloadLink
-            document={<InvoicePDF data={invoiceData} />}
-            fileName="Jullie-Devaani-Invoice.pdf"
-            className="flex items-center gap-2 bg-white text-black px-8 py-4 rounded-xl font-medium"
+          <button
+            onClick={handleGenerate}
+            disabled={generating}
+            className="flex items-center gap-2 bg-white text-black px-8 py-4 rounded-xl font-medium disabled:opacity-50"
           >
-            {({ loading }) => (
-              loading ? 'preparing pdf...' : 'generate invoice'
-            )}
-          </PDFDownloadLink>
+            {generating ? 'preparing pdf...' : 'generate invoice'}
+          </button>
         ) : (
           <button 
             disabled
