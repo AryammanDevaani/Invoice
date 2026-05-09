@@ -107,12 +107,23 @@ export const InvoiceForm = () => {
 
   const handleGenerate = async () => {
     setGenerating(true);
+    // Open window synchronously to avoid iOS Safari popup blocker
+    const newWindow = window.open('about:blank', '_blank');
     try {
       const blob = await pdf(<InvoicePDF data={invoiceData} />).toBlob();
       const url = URL.createObjectURL(blob);
-      window.open(url, '_blank');
+      if (newWindow) {
+        newWindow.location.href = url;
+      } else {
+        // Fallback: trigger download if popup was blocked
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Jullie-Devaani-Invoice.pdf';
+        a.click();
+      }
     } catch (err) {
       console.error('PDF generation failed:', err);
+      if (newWindow) newWindow.close();
     } finally {
       setGenerating(false);
     }
